@@ -1,0 +1,55 @@
+{
+  "title": "Socle",
+  "steps": [
+    {
+      "file": "package.json",
+      "line": 9,
+      "description": "Replace jasmine/karma by jest like the storybook tutorial\n\nDocs :\n- https://www.learnstorybook.com/intro-to-storybook/angular/en/get-started/\n- https://blog.ineat-group.com/2019/04/angular-remplacer-karma-jasmine-par-jest/",
+      "title": "test with jest"
+    },
+    {
+      "file": "package.json",
+      "line": 14,
+      "description": "End to End testing with cypress/cucumber :\n- features dans cypress/integrations\n- steps definitions dans cypress/step_definitions\n- to write simple js test, name file \"*.spec.js\"\n\nDocs :\n- https://medium.com/@itortv/how-to-integrate-cypress-and-cucumber-in-your-development-flow-in-just-a-few-weeks-96a46ac9165a\n- https://www.rb2.nl/en/university/how-to-use-cypress-with-cucumber-plugin",
+      "title": "e2e with cypress cucumber",
+      "selection": {
+        "start": {
+          "line": 134,
+          "character": 25
+        },
+        "end": {
+          "line": 134,
+          "character": 49
+        }
+      }
+    },
+    {
+      "file": "package.json",
+      "line": 25,
+      "description": "lint with prettier and stylelint\n\ndocs :\n- https://css-tricks.com/prettier-stylelint-writing-clean-css-keeping-clean-code-two-tool-game/",
+      "selection": {
+        "start": {
+          "line": 10,
+          "character": 17
+        },
+        "end": {
+          "line": 10,
+          "character": 21
+        }
+      },
+      "title": "prettier and stylelint"
+    },
+    {
+      "file": "package.json",
+      "line": 16,
+      "description": "storybook (can be use with chromatic)\n\ndocs :\n- https://www.learnstorybook.com/intro-to-storybook/angular/en/get-started/\n- https://www.chromatic.com/",
+      "title": "storybook"
+    },
+    {
+      "file": "package.json",
+      "line": 20,
+      "description": "Husky to prevent bad commit, it will run lint and tests\nthe tests are run on the current repo so be careful to add all files to be consistent\n\ndocs :\n- https://medium.com/@bartwijnants/using-prettier-and-husky-to-make-your-commits-save-2960f55cd351\n",
+      "title": "husky to prevent commit"
+    }
+  ]
+}

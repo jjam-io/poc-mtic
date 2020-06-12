@@ -44,3 +44,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#cypress
+/cypress/videos/*
+/cypress/screenshots/*
+
+#storybook
+storybook-static/
