@@ -3,11 +3,33 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "dev": "yarn start",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "jest",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "jest": "jest --watch",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "e2e": "concurrently \"ng serve\" \"wait-on http-get://localhost:4200 && yarn cy:run\" --kill-others --success first",
+    "e2e-gui": "concurrently \"ng serve\" \"wait-on http-get://localhost:4200 && yarn cy:open\" --kill-others --success first",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "pretty": "prettier --write --tab-width 4 \"src/**/*.{ts,html}\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn lint && yarn test && yarn e2e"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,html}": [
+      "npm run pretty"
+    ],
+    "src/**/*.scss": [
+      "stylelint --syntax scss --fix",
+      "git add"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -19,28 +41,96 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
+    "concurrently": "^5.2.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
+    "wait-on": "^5.0.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.8",
     "@angular/cli": "~9.1.8",
     "@angular/compiler-cli": "~9.1.11",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-typescript": "^7.10.1",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addon-notes": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/angular": "^5.3.19",
+    "@testing-library/angular": "^9.3.1",
+    "@testing-library/jest-dom": "^5.10.0",
+    "@types/jest": "^26.0.0",
     "@types/node": "^12.11.1",
-    "@types/jasmine": "~3.5.0",
-    "@types/jasminewd2": "~2.0.3",
+    "babel-loader": "^8.1.0",
     "codelyzer": "^5.1.2",
-    "jasmine-core": "~3.5.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~5.0.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "~2.1.0",
-    "karma-jasmine": "~3.0.1",
-    "karma-jasmine-html-reporter": "^1.4.2",
-    "protractor": "~7.0.0",
+    "cypress": "^4.8.0",
+    "cypress-cucumber-preprocessor": "^2.5.0",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "jest-preset-angular": "7.1.1",
+    "lint-staged": "^10.2.9",
+    "prettier": "^2.0.5",
+    "stylelint": "^13.6.0",
+    "stylelint-config-standard": "^20.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/jest-config/setup.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@storybook/*)"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/",
+      "<rootDir>/storybook-static/",
+      "<rootDir>/src/test.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/jest-config/",
+      "/node_modules/"
+    ],
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-preset-angular/AngularSnapshotSerializer.js",
+      "<rootDir>/node_modules/jest-preset-angular/HTMLCommentSerializer.js"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.spec.json",
+        "stringifyContentPathRegex": "\\.html$",
+        "diagnostics": false,
+        "isolatedModules": true,
+        "astTransformers": [
+          "<rootDir>/node_modules/jest-preset-angular/InlineHtmlStripStylesTransformer"
+        ]
+      }
+    },
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/src/jest-config/styleMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/jest-config/fileMock.js"
+    },
+    "transform": {
+      "^.+\\.(ts|html)$": "ts-jest",
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node",
+      ".html"
+    ]
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": false,
+    "stepDefinitions": "cypress/step_definitions"
   }
 }
